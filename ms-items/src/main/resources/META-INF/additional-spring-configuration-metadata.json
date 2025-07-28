@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "product.service.url",
-  "type": "java.lang.String",
-  "description": "A description for 'product.service.url'"
-}]}
+{"properties": [
+  {
+    "name": "product.service.url",
+    "type": "java.lang.String",
+    "description": "A description for 'product.service.url'"
+  },
+  {
+    "name": "config.baseurl.ms-products",
+    "type": "java.lang.String",
+    "description": "A description for 'config.baseurl.ms-products'"
+  }
+]}
