@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.reactive.function.client.WebClient.Builder;
 
 import com.jacs.items.ms.itemsms.models.Item;
@@ -27,7 +28,6 @@ public class ItemServiceWebClient implements ItemService {
 
         return this.client.build()
                 .get()
-                .uri("http://ms-products")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToFlux(Product.class)
@@ -38,16 +38,24 @@ public class ItemServiceWebClient implements ItemService {
 
     @Override
     public Optional<Item> findById(Long id) {
-        Item item = this.client.build()
+        Item item = null;
+        try{
+        item = this.client.build()
                 .get()
-                .uri("http://ms-products/{id}", id)
+                .uri("/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Product.class)
                 .map(product -> new Item(product, 1))
                 .block(); // Blocking for simplicity, consider using reactive patterns in production
+                return Optional.of(item);
+                
+        }catch(WebClientResponseException e){
+            return Optional.empty();
 
-        return Optional.ofNullable(item);
+        }
+
+
     }
 
 }
