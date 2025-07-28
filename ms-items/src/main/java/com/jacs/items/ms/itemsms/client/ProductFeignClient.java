@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.jacs.items.ms.itemsms.models.Product;
 
-@FeignClient(name = "ms-products", url = "${product.service.url}")
+@FeignClient(name = "ms-products")
 public interface ProductFeignClient {
 
     @GetMapping
