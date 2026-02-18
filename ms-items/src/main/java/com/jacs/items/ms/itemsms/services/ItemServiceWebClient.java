@@ -1,6 +1,8 @@
 package com.jacs.items.ms.itemsms.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
@@ -54,6 +56,43 @@ public class ItemServiceWebClient implements ItemService {
         //}
 
 
+    }
+
+    @Override
+    public Product save(Product product) {
+            return this.client.build()
+                    .post()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(product)
+                    .retrieve()
+                    .bodyToMono(Product.class)
+                    .block(); // Blocking for simplicity, consider using reactive patterns in production
+    }
+
+    @Override
+    public Product update(Long id, Product product) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        return this.client.build()
+                .put()
+                .uri("/{id}", params)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(product)
+                .retrieve()
+                .bodyToMono(Product.class).block(); // Blocking for simplicity, consider using reactive patterns in production
+    }
+
+    @Override
+    public void delete(Long id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        this.client.build()
+                .delete()
+                .uri("/{id}", params)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block(); // Blocking for simplicity, consider using reactive patterns in production
     }
 
 }
