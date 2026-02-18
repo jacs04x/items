@@ -84,7 +84,7 @@ public class ItemServiceWebClient implements ItemService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) { 
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         this.client.build()
