@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.reactive.function.client.WebClient.Builder;
 
 import com.jacs.items.ms.itemsms.models.Item;
@@ -39,7 +38,7 @@ public class ItemServiceWebClient implements ItemService {
     @Override
     public Optional<Item> findById(Long id) {
         Item item = null;
-        try{
+        //try{
         item = this.client.build()
                 .get()
                 .uri("/{id}", id)
@@ -50,10 +49,9 @@ public class ItemServiceWebClient implements ItemService {
                 .block(); // Blocking for simplicity, consider using reactive patterns in production
                 return Optional.of(item);
                 
-        }catch(WebClientResponseException e){
-            return Optional.empty();
-
-        }
+        //}catch(WebClientResponseException e){
+        //    return Optional.empty();
+        //}
 
 
     }
